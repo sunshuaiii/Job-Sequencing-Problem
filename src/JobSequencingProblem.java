@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,22 +10,28 @@ public class JobSequencingProblem {
     public static void main(String[] args) {
 
         List<Job> arraylist = new ArrayList<>();
-        arraylist.add(new Assignment("PWDSA", 3, 20));
-        arraylist.add(new Assignment("HCID", 1, 30));
-        arraylist.add(new Assignment("OS", 3, 20));
-        arraylist.add(new Assignment("SPM", 2, 35));
-        arraylist.add(new Assignment("WAD", 2, 20));
+
+        try {
+            Scanner in = new Scanner(new File("jobs.txt"));
+            String line;
+            while (in.hasNext()) {
+                line = in.nextLine();
+                String[] words = line.split(",");
+                arraylist.add(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2])));
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Using Greedy Algorithm:");
         System.out.print(
                 "Final job sequence following maximum profit: ");
         printJobs(GreedyMethod.sequenceJobs(arraylist, 3));
-        System.out.println();
 
-        System.out.println("Using Branch And Bound Algorithm:");
+        System.out.println("\nUsing Branch And Bound Algorithm:");
         System.out.print(
                 "Final job sequence following maximum profit: ");
-        printJobs(BranchAndBound.sequenceJobs(arraylist, 3));
+        // printJobs(BranchAndBound.sequenceJobs());
     }
 
     public static void printJobs(List<String> list) {
@@ -30,6 +39,7 @@ public class JobSequencingProblem {
         while (iterator.hasNext()) {
             System.out.print(iterator.next() + " ");
         }
+        System.out.println();
     }
 
 }
