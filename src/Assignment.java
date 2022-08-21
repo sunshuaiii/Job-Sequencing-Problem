@@ -1,7 +1,10 @@
 public class Assignment extends Job {
 
-    public Assignment(int deadline, int mark) {
-        super(deadline, mark);
+    public Assignment() {
+    }
+
+    public Assignment(String name, int deadline, int mark) {
+        super(name, deadline, mark);
     }
 
 }
