@@ -1,4 +1,3 @@
-import java.util.Collections;
 import java.util.List;
 import java.util.Arrays;
 
@@ -19,29 +18,28 @@ public class GreedyMethod {
 
     public static List<String> sequenceJobs(List<Job> list, int numOfJobsToSequence) {
         // Sort the jobs according to decreasing order of profit
-        Collections.sort(list, (a, b) -> b.getProfit() - a.getProfit());
+        list.sort((a, b) -> b.getProfit() - a.getProfit());
 
         // To keep track of free time slots
-        boolean result[] = new boolean[numOfJobsToSequence];
+        boolean[] result = new boolean[numOfJobsToSequence];
 
         // To store resulting sequence of jobs
-        String job[] = new String[numOfJobsToSequence];
+        String[] job = new String[numOfJobsToSequence];
 
         // Iterating through all given jobs
-        for (int i = 0; i < list.size(); i++) {
+        for (Job value : list) {
             // Find a free slot for this job starting from the last possible slot
-            for (int j = Math.min(numOfJobsToSequence - 1, list.get(i).getDeadline() - 1); j >= 0; j--) {
+            for (int j = Math.min(numOfJobsToSequence - 1, value.getDeadline() - 1); j >= 0; j--) {
                 // Free slot found
-                if (result[j] == false) { // If the slot is currently empty
+                if (!result[j]) { // If the slot is currently empty
                     result[j] = true; // Set the slot to be filled
-                    job[j] = list.get(i).id; // Store the job into the resulting sequence
+                    job[j] = value.id; // Store the job into the resulting sequence
                     break; // Move on to the next job in the list
                 }
             }
         }
 
-        List<String> joblist = Arrays.asList(job);
-        return joblist;
+        return Arrays.asList(job);
     }
 
 }
