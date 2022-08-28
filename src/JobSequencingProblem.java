@@ -23,15 +23,18 @@ public class JobSequencingProblem {
             e.printStackTrace();
         }
 
-        System.out.println("Using Greedy Algorithm:");
+        System.out.println("Using Greedy Method:");
         System.out.print(
                 "Final job sequence following maximum profit: ");
         printJobs(GreedyMethod.sequenceJobs(arraylist, 3));
 
-        System.out.println("\nUsing Branch And Bound Algorithm:");
+        System.out.println("\nUsing Naive Recursive Method:");
         System.out.print(
                 "Final job sequence following maximum profit: ");
-        // printJobs(BranchAndBound.sequenceJobs());
+        // NaiveRecursiveMethod.sequenceJobs(arraylist);
+        for (Job job : arraylist)
+            System.out.println(job.getId() + " " + job.getDeadline());
+        // printJobs(NaiveRecursiveMethod.sequenceJobs(arraylist));
     }
 
     public static void printJobs(List<String> list) {
