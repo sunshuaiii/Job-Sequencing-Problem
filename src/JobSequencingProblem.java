@@ -14,27 +14,32 @@ public class JobSequencingProblem {
         try {
             Scanner in = new Scanner(new File("jobs.txt"));
             String line;
+            if (!in.hasNext()) {
+                System.out.println("File is empty!");
+                return;
+            }
             while (in.hasNext()) {
                 line = in.nextLine();
                 String[] words = line.split(",");
                 arraylist.add(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2])));
             }
+            System.out.println("Using Greedy Method:");
+            System.out.print(
+                    "Final job sequence following maximum profit: ");
+            printJobs(GreedyMethod.sequenceJobs(arraylist, 3));
+
+            System.out.println("\nUsing Naive Recursive Method:");
+            System.out.print(
+                    "Final job sequence following maximum profit: ");
+            // NaiveRecursiveMethod.sequenceJobs(arraylist);
+            for (Job job : arraylist)
+                System.out.println(job.getId() + " " + job.getDeadline());
+            // printJobs(NaiveRecursiveMethod.sequenceJobs(arraylist));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
-
-        System.out.println("Using Greedy Method:");
-        System.out.print(
-                "Final job sequence following maximum profit: ");
-        printJobs(GreedyMethod.sequenceJobs(arraylist, 3));
-
-        System.out.println("\nUsing Naive Recursive Method:");
-        System.out.print(
-                "Final job sequence following maximum profit: ");
-        // NaiveRecursiveMethod.sequenceJobs(arraylist);
-        for (Job job : arraylist)
-            System.out.println(job.getId() + " " + job.getDeadline());
-        // printJobs(NaiveRecursiveMethod.sequenceJobs(arraylist));
     }
 
     public static void printJobs(List<String> list) {

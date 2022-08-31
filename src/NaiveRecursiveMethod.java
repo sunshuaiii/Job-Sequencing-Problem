@@ -14,7 +14,7 @@ public class NaiveRecursiveMethod {
         // Sort the jobs according to increasing order of deadline
         list.sort((b, a) -> b.getDeadline() - a.getDeadline());
         System.out.println(list);
-        return sequenceJobs(list, listSize);
+       // return sequenceJobs(list, listSize);
     }
 
     // Find the latest job that does not conflict with list[i]
