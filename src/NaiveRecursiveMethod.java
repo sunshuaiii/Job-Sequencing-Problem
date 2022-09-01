@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,27 +11,23 @@ import java.util.List;
 
 public class NaiveRecursiveMethod {
 
-    public static void sequenceJobs(List<Job> list, int listSize) {
-        // Sort the jobs according to increasing order of deadline
-        list.sort((b, a) -> b.getDeadline() - a.getDeadline());
-        System.out.println(list);
-       // return sequenceJobs(list, listSize);
+    public static int sequenceJobs(List<Job> list, int listSize) {
+        // Sort the jobs according to increasing order of finish time
+        list.sort((b, a) -> b.getFinish() - a.getFinish());
+        return findMaxProfitRec(list, listSize);
     }
 
-    // Find the latest job that does not conflict with list[i]
-    // Return -1 if there is no compatible job
+    // Find the latest job that does not conflict with the current job
+    // Return -1 if no such job is found
     private static int latestNonConflict(List<Job> list, int listSize) {
-        for (int i = listSize - 1; i >= 0; i--) {
-            // finish <= start
-            if (list.get(i).getDeadline() <= list.get(listSize - 1).getDeadline())
-                return i;
+        for (int j = listSize - 1; j >= 0; j--) {
+            if (list.get(j).getFinish() <= list.get(listSize - 1).getStart())
+                return j;
         }
         return -1;
     }
 
-    // A recursive function that returns the maximum possible
-    // profit from given array of jobs. The array of jobs must
-    // be sorted according to finish time.
+    // Recursive method that returns the maximum possible profit
     private static int findMaxProfitRec(List<Job> list, int listSize) {
         // Base case
         if (listSize == 1)
@@ -46,6 +43,35 @@ public class NaiveRecursiveMethod {
         int exclProf = findMaxProfitRec(list, listSize - 1);
 
         return Math.max(inclProf, exclProf);
+    }
+
+    // To Sunshuai: here is start and finish instead of deadline
+    // Another issue: returns only the optimal profit and not the sequence of jobs, so need to modify
+    public static void main(String args[]) {
+        List<Job> list = new ArrayList<Job>();
+        list.add(new Job(3, 10, 20));
+        list.add(new Job(1, 2, 50));
+        list.add(new Job(6, 19, 100));
+        list.add(new Job(2, 100, 200));
+        System.out.println("The optimal profit is " + sequenceJobs(list, list.size()));
+    }
+
+    static class Job {
+        int start, finish, profit;
+        Job(int start, int finish, int profit) {
+            this.start = start;
+            this.finish = finish;
+            this.profit = profit;
+        }
+        public int getStart() {
+            return start;
+        }
+        public int getFinish() {
+            return finish;
+        }
+        public int getProfit() {
+            return profit;
+        }
     }
 
 }
