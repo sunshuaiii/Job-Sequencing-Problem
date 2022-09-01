@@ -49,7 +49,7 @@ public class JobSequencingProblem {
         Iterator<Job> iterator = list.iterator();
         while (iterator.hasNext()) {
             Job theJob = iterator.next();
-            System.out.print(theJob.getId() + " " + theJob.getProfit() + " marks, ");
+            System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
         }
         System.out.println();
     }
