@@ -27,19 +27,19 @@ public abstract class Job {
         return end - start;
     }
 
-    public int getStart(){
+    public int getStart() {
         return start;
     }
 
-    public void setStart(int start){
+    public void setStart(int start) {
         this.start = start;
     }
 
-    public int getEnd(){
+    public int getEnd() {
         return end;
     }
 
-    public void setEnd(int end){
+    public void setEnd(int end) {
         this.end = end;
     }
 

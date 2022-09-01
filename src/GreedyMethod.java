@@ -5,11 +5,11 @@ import java.util.List;
  * Algorithm:
  * 1) Sort all jobs in decreasing order of profit.
  * 2) Iterate on jobs in decreasing order of profit.
- *    For each job , do the following :
+ * For each job , do the following :
  * a) Find a time slot i, such that slot is empty and i < deadline and i is greatest.
- *    Put the job in this slot and mark this slot filled.
+ * Put the job in this slot and mark this slot filled.
  * b) If no such i exists, then ignore the job.
- * 
+ * <p>
  * Time Complexity is O(n^2)
  * referenced from: https://www.geeksforgeeks.org/job-sequencing-problem/
  **/
@@ -17,8 +17,7 @@ import java.util.List;
 public class GreedyMethod {
 
     public static List<Job> sequenceJobs(List<Job> list, int numOfJobsToSequence) {
-        // Sort the jobs according to decreasing order of profit
-        list.sort((a, b) -> b.getProfit() - a.getProfit());
+        sortJob(list);
 
         // To keep track of free time slots
         boolean[] result = new boolean[numOfJobsToSequence];
@@ -38,8 +37,35 @@ public class GreedyMethod {
                 }
             }
         }
-
+//        job.sort(Comparator.comparingInt(Job::getDuration));
+        job.sort((a, b) -> a.getDuration() - b.getDuration());
         return job;
+    }
+
+    public static void printJob(List<Job> list) {
+        System.out.printf("%12s:", "Job");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getId());
+        }
+        System.out.printf("%n%12s:", "Duration");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getDuration());
+        }
+        System.out.printf("%n%12s:", "Mark");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getProfit());
+        }
+        System.out.println();
+    }
+
+    public static void sortJob(List<Job> list){
+        printJob(list);
+
+        // Sort the jobs according to decreasing order of profit
+        list.sort((a, b) -> b.getProfit() - a.getProfit());
+
+        System.out.println("\nSorted List:");
+        printJob(list);
     }
 
 }

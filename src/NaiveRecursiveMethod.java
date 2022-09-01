@@ -13,14 +13,8 @@ import java.util.List;
 public class NaiveRecursiveMethod {
 
     public static List<Job> sequenceJobs(List<Job> list, int listSize) {
-        // Sort the jobs according to increasing order of finish time
-        list.sort((b, a) -> b.getEnd() - a.getEnd());
-//        list.sort(Comparator.comparingInt(Job::getEnd));
-        for (Job job : list) {
-            System.out.print(job.getId() + " ");
-        }
-        System.out.println();
-        return findMaxProfitRec(list, listSize);
+        sortJob(list);
+        return findMaxProfitRec(list, new ArrayList<>(), listSize);
     }
 
     // Find the latest job that does not conflict with the current job
@@ -34,47 +28,57 @@ public class NaiveRecursiveMethod {
     }
 
     // Recursive method that returns the maximum possible profit
-    private static List<Job> findMaxProfitRec(List<Job> list, int listSize) {
-        // To store resulting sequence of jobs
-        List<Job> jobs = new ArrayList<>();
-        List<Job> inclProf = new ArrayList<>();
-        List<Job> exclProf;
-
+    private static List<Job> findMaxProfitRec(List<Job> list, List<Job> inclProf, int listSize) {
         // Base case
         if (listSize == 1) {
-            jobs.add(list.get(0));
-            return jobs;
+            inclProf.add(list.get(0));
+            inclProf.sort((b, a) -> b.getStart() - a.getStart());
+            return inclProf;
         }
 
-        // Find profit when current job is included
-        inclProf.add(list.get(listSize - 1));
+        // Find job when current job is included
+        inclProf.add(list.get(listSize - 1));   // the last job is always selected - current
         int i = latestNonConflict(list, listSize);
         if (i != -1) {
-            inclProf.add(list.get(i));
-            findMaxProfitRec(list, i + 1);
+            findMaxProfitRec(list, inclProf, i + 1);
         }
 
-        // Find profit when current job is excluded
-        exclProf = findMaxProfitRec(list, listSize - 1);
+        inclProf.sort((b, a) -> b.getStart() - a.getStart());
+        return inclProf;
 
-        int totalProfit = 0;
-        for (Job job : inclProf) {
-            totalProfit += job.getProfit();
-        }
-        int totalProfit2 = 0;
-        for (Job job : exclProf) {
-            totalProfit2 += job.getProfit();
-        }
-
-        if (totalProfit > totalProfit2) {
-            return inclProf;
-        } else {
-            return exclProf;
-        }
     }
 
-    // To Sunshuai: here is start and finish instead of deadline
-    // Another issue: returns only the optimal profit and not the sequence of jobs, so need to modify
+    public static void printJob(List<Job> list) {
+        System.out.printf("%12s:", "Job");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getId());
+        }
+        System.out.printf("%n%12s:", "Start");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getStart());
+        }
+        System.out.printf("%n%12s:", "End");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getEnd());
+        }
+        System.out.printf("%n%12s:", "Mark");
+        for (Job job : list) {
+            System.out.printf("%7s ", job.getProfit());
+        }
+        System.out.println();
+    }
+
+    public static void sortJob(List<Job> list) {
+        printJob(list);
+
+        // Sort the jobs according to increasing order of finish time
+        list.sort((b, a) -> b.getEnd() - a.getEnd());
+//        list.sort(Comparator.comparingInt(Job::getEnd));
+
+        System.out.println("\nSorted List:");
+        printJob(list);
+    }
+
 //    public static void main(String[] args) {
 //        List<Job> list = new ArrayList<>();
 //        list.add(new Job("PWDSA", 1, 2, 50));
