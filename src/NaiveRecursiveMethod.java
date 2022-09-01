@@ -75,46 +75,8 @@ public class NaiveRecursiveMethod {
         list.sort((b, a) -> b.getEnd() - a.getEnd());
 //        list.sort(Comparator.comparingInt(Job::getEnd));
 
-        System.out.println("\nSorted List:");
+        System.out.println("\nSorted List :");
         printJob(list);
     }
-
-//    public static void main(String[] args) {
-//        List<Job> list = new ArrayList<>();
-//        list.add(new Job("PWDSA", 1, 2, 50));
-//        list.add(new Job("HCID", 3, 5, 20));
-//        list.add(new Job("OS", 6, 19, 100));
-//        list.add(new Job("SPM", 2, 100, 200));
-//        list.add(new Job("WAD", 2, 100, 200));
-//        List<Job> job = sequenceJobs(list, list.size());
-//        for (Job s : job) {
-//            System.out.print(s.getId() + " ");
-//        }
-//        System.out.println();
-//    }
-//
-//    static class Job {
-//        String id;
-//        int start, end, profit;
-//
-//        Job(String id, int start, int end, int profit){
-//            this.id = id;
-//            this.start = start;
-//            this.end = end;
-//            this.profit = profit;
-//        }
-//        public String getId() {
-//            return id;
-//        }
-//        public int getStart() {
-//            return start;
-//        }
-//        public int getEnd() {
-//            return end;
-//        }
-//        public int getProfit() {
-//            return profit;
-//        }
-//    }
 
 }

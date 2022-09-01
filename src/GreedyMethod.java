@@ -58,13 +58,13 @@ public class GreedyMethod {
         System.out.println();
     }
 
-    public static void sortJob(List<Job> list){
+    public static void sortJob(List<Job> list) {
         printJob(list);
 
         // Sort the jobs according to decreasing order of profit
         list.sort((a, b) -> b.getProfit() - a.getProfit());
 
-        System.out.println("\nSorted List:");
+        System.out.println("\nSorted List :");
         printJob(list);
     }
 
