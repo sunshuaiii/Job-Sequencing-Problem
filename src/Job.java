@@ -1,15 +1,17 @@
 public abstract class Job {
 
     String id;
-    private int deadline;
+    private int start;
+    private int end;
     private int profit;
 
     public Job() {
     }
 
-    public Job(String id, int deadline, int profit) {
+    public Job(String id, int start, int end, int profit) {
         this.id = id;
-        this.deadline = deadline;
+        this.start = start;
+        this.end = end;
         this.profit = profit;
     }
 
@@ -21,12 +23,24 @@ public abstract class Job {
         this.id = id;
     }
 
-    public int getDeadline() {
-        return deadline;
+    public int getDuration() {
+        return end - start;
     }
 
-    public void setDeadline(int deadline) {
-        this.deadline = deadline;
+    public int getStart(){
+        return start;
+    }
+
+    public void setStart(int start){
+        this.start = start;
+    }
+
+    public int getEnd(){
+        return end;
+    }
+
+    public void setEnd(int end){
+        this.end = end;
     }
 
     public int getProfit() {

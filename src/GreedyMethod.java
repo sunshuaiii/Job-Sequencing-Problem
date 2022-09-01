@@ -1,5 +1,5 @@
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 /**
  * Algorithm:
@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class GreedyMethod {
 
-    public static List<String> sequenceJobs(List<Job> list, int numOfJobsToSequence) {
+    public static List<Job> sequenceJobs(List<Job> list, int numOfJobsToSequence) {
         // Sort the jobs according to decreasing order of profit
         list.sort((a, b) -> b.getProfit() - a.getProfit());
 
@@ -24,22 +24,22 @@ public class GreedyMethod {
         boolean[] result = new boolean[numOfJobsToSequence];
 
         // To store resulting sequence of jobs
-        String[] job = new String[numOfJobsToSequence];
+        List<Job> job = new ArrayList<>();
 
         // Iterating through all given jobs
         for (Job value : list) {
             // Find a free slot for this job starting from the last possible slot
-            for (int j = Math.min(numOfJobsToSequence - 1, value.getDeadline() - 1); j >= 0; j--) {
+            for (int j = Math.min(numOfJobsToSequence - 1, value.getDuration() - 1); j >= 0; j--) {
                 // Free slot found
                 if (!result[j]) { // If the slot is currently empty
                     result[j] = true; // Set the slot to be filled
-                    job[j] = value.id; // Store the job into the resulting sequence
+                    job.add(value); // Store the job into the resulting sequence
                     break; // Move on to the next job in the list
                 }
             }
         }
 
-        return Arrays.asList(job);
+        return job;
     }
 
 }
