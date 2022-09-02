@@ -9,8 +9,10 @@ public class JobSequencingProblem {
         String fileName = askFileName();
         File file = new File(fileName);
 
-        System.out.print("Final job sequence following maximum profit: \n");
         if (readFile(file, jobList, jobStack)) {
+            System.out.println("Reading data from: " + fileName);
+            System.out.print("\nFinal job sequence following maximum profit: \n");
+
             // 1. Greedy Method
             System.out.println("Using Greedy Method:");
             printJobs(GreedyMethod.sequenceJobs(jobList));
@@ -24,7 +26,7 @@ public class JobSequencingProblem {
     public static String askFileName() {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter the file name: ");
-        String fileName = in.nextLine();
+        String fileName = in.nextLine() + ".txt";
         in.close();
         return fileName;
     }
@@ -41,6 +43,10 @@ public class JobSequencingProblem {
             while (in.hasNext()) {
                 line = in.nextLine();
                 String[] words = line.split(",");
+                if(Integer.parseInt(words[1]) > Integer.parseInt(words[2])){
+                    System.out.println("Haiya, please check your file lah, start time kenot be later than end time lah");
+                    return false;
+                }
                 jobList.add(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]),
                         Integer.parseInt(words[3])));
                 jobStack.push(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]),
