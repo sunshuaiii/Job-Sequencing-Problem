@@ -30,12 +30,13 @@ import java.util.List;
 
 public class NaiveRecursiveMethod {
 
-    public static List<Job> sequenceJobs(List<Job> list, int listSize) {
+    public static List<Job> sequenceJobs(List<Job> list) {
         sortJob(list);
+        int listSize = list.size();
         return findMaxProfitRec(list, new ArrayList<>(), listSize);
     }
 
-    // Find the latest job that does not conflict with the current job
+    // Find the latest job list index that does not conflict with the current job
     // Return the index of the job in the list
     // Return -1 if no such job is found
     private static int latestNonConflict(List<Job> list, int listSize) {
@@ -61,7 +62,7 @@ public class NaiveRecursiveMethod {
 
         if (i != -1) {
             if (i > 0) {
-                if (list.get(i -1).getProfit() > list.get(i).getProfit()) {
+                if (list.get(i - 1).getProfit() > list.get(i).getProfit()) {
                     // Add job to jobSequence when job before current job has higher profit than current job
                     findMaxProfitRec(list, jobSequence, i);
                 } else {
@@ -74,7 +75,6 @@ public class NaiveRecursiveMethod {
             }
         }
 
-        jobSequence.sort((b, a) -> b.getStart() - a.getStart());
         return jobSequence;
 
     }
@@ -109,5 +109,4 @@ public class NaiveRecursiveMethod {
         System.out.println("\nSorted List :");
         printJob(list);
     }
-
 }

@@ -20,11 +20,12 @@ import java.util.List;
 
 public class GreedyMethod {
 
-    public static List<Job> sequenceJobs(List<Job> list, int numOfJobsToSequence) {
+    public static List<Job> sequenceJobs(List<Job> list) {
         sortJob(list);
+        int listSize = list.size();
 
         // To keep track of free time slots
-        boolean[] result = new boolean[numOfJobsToSequence];
+        boolean[] result = new boolean[listSize];
 
         // To store resulting sequence of jobs
         List<Job> jobSequence = new ArrayList<>();
@@ -32,7 +33,7 @@ public class GreedyMethod {
         // Iterating through all given jobs
         for (Job value : list) {
             // Find a free slot for this job starting from the last possible slot
-            for (int j = Math.min(numOfJobsToSequence - 1, value.getDuration() - 1); j >= 0; j--) {
+            for (int j = Math.min(listSize - 1, value.getDuration() - 1); j >= 0; j--) {
                 // Free slot found
                 if (!result[j]) { // If the slot is currently empty
                     result[j] = true; // Set the slot to be filled

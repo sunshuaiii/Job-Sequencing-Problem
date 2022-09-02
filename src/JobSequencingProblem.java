@@ -13,11 +13,11 @@ public class JobSequencingProblem {
         if (readFile(file, jobList)) {
             // 1. Greedy Method
             System.out.println("Using Greedy Method:");
-            printJobs(GreedyMethod.sequenceJobs(jobList, jobList.size()));
+            printJobs(GreedyMethod.sequenceJobs(jobList));
 
             // 2. Naive Recursive Method
             System.out.println("\n\nUsing Naive Recursive Method:");
-            printJobs(NaiveRecursiveMethod.sequenceJobs(jobList, jobList.size()));
+            printJobs(NaiveRecursiveMethod.sequenceJobs(jobList));
         }
     }
 
@@ -53,7 +53,7 @@ public class JobSequencingProblem {
             total += theJob.getProfit();
             System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
         }
-        System.out.println(total);
+        System.out.println("Total: " + total + " marks");
     }
 
 }
