@@ -31,13 +31,13 @@ public class GreedyMethod {
         List<Job> jobSequence = new ArrayList<>();
 
         // Iterating through all given jobs
-        for (Job value : list) {
+        for (Job job : list) {
             // Find a free slot for this job starting from the last possible slot
-            for (int j = Math.min(listSize - 1, value.getDuration() - 1); j >= 0; j--) {
+            for (int j = Math.min(listSize - 1, job.getDuration() - 1); j >= 0; j--) {
                 // Free slot found
                 if (!result[j]) { // If the slot is currently empty
                     result[j] = true; // Set the slot to be filled
-                    jobSequence.add(value); // Store the job into the resulting sequence
+                    jobSequence.add(job); // Store the job into the resulting sequence
                     break; // Move on to the next job in the list
                 }
             }
