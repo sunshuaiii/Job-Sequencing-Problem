@@ -45,8 +45,9 @@ public class JobSequencingProblem {
             while (in.hasNext()) {
                 line = in.nextLine();
                 String[] words = line.split(",");
-                if(Integer.parseInt(words[1]) > Integer.parseInt(words[2])){
+                if (Integer.parseInt(words[1]) > Integer.parseInt(words[2])) {
                     System.out.println("Haiya, please check your file lah, start time kenot be later than end time lah");
+                    in.close();
                     return false;
                 }
                 jobList.add(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]),
@@ -74,13 +75,13 @@ public class JobSequencingProblem {
             }
             System.out.println("Total: " + total + " marks");
         } else if (list instanceof Stack) {
-            while (iterator.hasNext()) {
-                Job theJob = ( (Stack<Job>) list ).pop();
+            while (!list.isEmpty()) {
+                Job theJob = ((Stack<Job>) list).pop();
                 total += theJob.getProfit();
                 System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
             }
             System.out.println("Total: " + total + " marks");
         }
-
     }
+
 }
