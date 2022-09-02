@@ -1,27 +1,35 @@
-import java.util.Scanner;
+import java.util.*;
 import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class JobSequencingProblem {
     public static void main(String[] args) {
         List<Job> jobList = new ArrayList<>();
-        File file = new File("jobs.txt");
+        Stack<Job> jobStack = new Stack<>();
+
+        String fileName = askFileName();
+        File file = new File(fileName);
 
         System.out.print("Final job sequence following maximum profit: \n");
-        if (readFile(file, jobList)) {
+        if (readFile(file, jobList, jobStack)) {
             // 1. Greedy Method
             System.out.println("Using Greedy Method:");
             printJobs(GreedyMethod.sequenceJobs(jobList));
 
             // 2. Naive Recursive Method
             System.out.println("\n\nUsing Naive Recursive Method:");
-            printJobs(NaiveRecursiveMethod.sequenceJobs(jobList));
+            printJobs(NaiveRecursiveMethod.sequenceJobs(jobStack));
         }
     }
 
-    public static boolean readFile(File file, List<Job> jobList) {
+    public static String askFileName() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Enter the file name: ");
+        String fileName = in.nextLine();
+        in.close();
+        return fileName;
+    }
+
+    public static boolean readFile(File file, List<Job> jobList, Stack<Job> jobStack) {
         try {
             Scanner in = new Scanner(file);
             String line;
@@ -34,6 +42,8 @@ public class JobSequencingProblem {
                 line = in.nextLine();
                 String[] words = line.split(",");
                 jobList.add(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]),
+                        Integer.parseInt(words[3])));
+                jobStack.push(new Assignment(words[0], Integer.parseInt(words[1]), Integer.parseInt(words[2]),
                         Integer.parseInt(words[3])));
             }
             in.close();
@@ -48,12 +58,21 @@ public class JobSequencingProblem {
         System.out.print("\nJob Sequencing: \n");
         int total = 0;
         Iterator<Job> iterator = list.iterator();
-        while (iterator.hasNext()) {
-            Job theJob = iterator.next();
-            total += theJob.getProfit();
-            System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
+        if (list instanceof ArrayList) {
+            while (iterator.hasNext()) {
+                Job theJob = iterator.next();
+                total += theJob.getProfit();
+                System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
+            }
+            System.out.println("Total: " + total + " marks");
+        } else if (list instanceof Stack) {
+            while (iterator.hasNext()) {
+                Job theJob = ( (Stack<Job>) list ).pop();
+                total += theJob.getProfit();
+                System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
+            }
+            System.out.println("Total: " + total + " marks");
         }
-        System.out.println("Total: " + total + " marks");
-    }
 
+    }
 }

@@ -42,7 +42,6 @@ public class GreedyMethod {
                 }
             }
         }
-//        job.sort(Comparator.comparingInt(Job::getDuration));
         jobSequence.sort((a, b) -> a.getDuration() - b.getDuration());
         return jobSequence;
     }

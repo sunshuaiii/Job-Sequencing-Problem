@@ -1,28 +1,26 @@
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Algorithm:
  * 1) Sort the jobs according to increasing order of end time
  *
  * 2) Now apply following recursive process.
- *      -Here list is an ArrayList of jobs
- *      -Here listSize is the size for the ArrayList of jobs
- *      -Here jobSequence is the ArrayList for storing the sequence of jobs
+ *      -Here list is a Stack of jobs
+ *      -Here listSize is the size for the Stack of jobs
+ *      -Here jobSequence is the Stack for storing the sequence of jobs
  *
  *      // Base case
  *      a) if (listSize == 1)
- *          add the first job in list into jobSequence
- *          sort the jobSequence according to increasing order of start time
+ *          push the first job in list into jobSequence
  *          return jobSequence
  *
  *      b) Add the job with higher profit into jobSequence
  *          (i) Find the latest job with higher profit that does not conflict with the current job
  *          (ii) call recursive method findMaxProfitRec()
  *
- *      c) sort the jobSequence according to increasing order of start time
- *          return jobSequence
+ *      c) return jobSequence
+ *
  * <p>
  * Time Complexity is O()
  * referenced from: https://www.geeksforgeeks.org/weighted-job-scheduling/
@@ -30,35 +28,34 @@ import java.util.List;
 
 public class NaiveRecursiveMethod {
 
-    public static List<Job> sequenceJobs(List<Job> list) {
-        sortJob(list);
-        int listSize = list.size();
-        return findMaxProfitRec(list, new ArrayList<>(), listSize);
+    public static Stack<Job> sequenceJobs(Stack<Job> stack) {
+        sortJob(stack);
+        int stackSize = stack.size();
+        return findMaxProfitRec(stack, new Stack<>(), stackSize);
     }
 
     // Find the latest job list index that does not conflict with the current job
     // Return the index of the job in the list
     // Return -1 if no such job is found
-    private static int latestNonConflict(List<Job> list, int listSize) {
-        for (int j = listSize - 1; j >= 0; j--) {
-            if (list.get(j).getEnd() <= list.get(listSize - 1).getStart())
+    private static int latestNonConflict(Stack<Job> list, int stackSize) {
+        for (int j = stackSize - 1; j >= 0; j--) {
+            if (list.get(j).getEnd() <= list.get(stackSize - 1).getStart())
                 return j;
         }
         return -1;
     }
 
     // Recursive method that returns the maximum possible profit
-    private static List<Job> findMaxProfitRec(List<Job> list, List<Job> jobSequence, int listSize) {
+    private static Stack<Job> findMaxProfitRec(Stack<Job> list, Stack<Job> jobSequence, int stackSize) {
         // Base case
-        if (listSize == 1) {
-            jobSequence.add(list.get(0));
-            jobSequence.sort((b, a) -> b.getStart() - a.getStart());
+        if (stackSize == 1) {
+            jobSequence.push(list.get(0));
             return jobSequence;
         }
 
-        // the last job is always selected and becomes current job
-        jobSequence.add(list.get(listSize - 1));
-        int i = latestNonConflict(list, listSize);
+        // the last job is selected and becomes the current job
+        jobSequence.push(list.get(stackSize - 1));
+        int i = latestNonConflict(list, stackSize);
 
         if (i != -1) {
             if (i > 0) {
@@ -104,7 +101,6 @@ public class NaiveRecursiveMethod {
 
         // Sort the jobs according to increasing order of end time
         list.sort((b, a) -> b.getEnd() - a.getEnd());
-        // list.sort(Comparator.comparingInt(Job::getEnd));
 
         System.out.println("\nSorted List :");
         printJob(list);
