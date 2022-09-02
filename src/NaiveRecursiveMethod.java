@@ -76,7 +76,7 @@ public class NaiveRecursiveMethod {
 
     }
 
-    public static void printJob(Stack<Job> stack) {
+    private static void printJob(Stack<Job> stack) {
         System.out.printf("%12s:", "Job");
         for (Job job : stack) {
             System.out.printf("%7s ", job.getId());
@@ -96,7 +96,7 @@ public class NaiveRecursiveMethod {
         System.out.println();
     }
 
-    public static void sortJob(Stack<Job> stack) {
+    private static void sortJob(Stack<Job> stack) {
         printJob(stack);
 
         // Sort the jobs according to increasing order of end time

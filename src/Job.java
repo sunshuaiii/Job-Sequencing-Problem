@@ -1,6 +1,6 @@
 public abstract class Job {
 
-    String id;
+    private String id;
     private int start;
     private int end;
     private int profit;

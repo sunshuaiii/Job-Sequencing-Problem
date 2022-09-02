@@ -46,7 +46,7 @@ public class GreedyMethod {
         return jobSequence;
     }
 
-    public static void printJob(List<Job> list) {
+    private static void printJob(List<Job> list) {
         System.out.printf("%12s:", "Job");
         for (Job job : list) {
             System.out.printf("%7s ", job.getId());
@@ -62,7 +62,7 @@ public class GreedyMethod {
         System.out.println();
     }
 
-    public static void sortJob(List<Job> list) {
+    private static void sortJob(List<Job> list) {
         printJob(list);
 
         // Sort the jobs according to decreasing order of profit
