@@ -10,15 +10,17 @@ public class JobSequencingProblem {
         File file = new File(fileName);
 
         if (readFile(file, jobList, jobStack)) {
-            System.out.println("Reading data from: " + fileName);
-            System.out.print("\nFinal job sequence following maximum profit: \n");
+            System.out.println("Reading data from " + fileName + "...");
+            System.out.print("\nFinal job sequence following maximum profit: \n\n");
 
             // 1. Greedy Method
-            System.out.println("Using Greedy Method:");
+            System.out.println("---------------------------------------------------------------------------------");
+            System.out.println("Using Greedy Method:\n");
             printJobs(GreedyMethod.sequenceJobs(jobList));
 
             // 2. Naive Recursive Method
-            System.out.println("\n\nUsing Naive Recursive Method:");
+            System.out.println("\n\n---------------------------------------------------------------------------------");
+            System.out.println("Using Naive Recursive Method:\n");
             printJobs(NaiveRecursiveMethod.sequenceJobs(jobStack));
         }
     }
