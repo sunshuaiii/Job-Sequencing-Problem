@@ -4,11 +4,15 @@ import java.util.List;
 /**
  * Algorithm:
  * 1) Sort all jobs in decreasing order of profit.
+ *
  * 2) Iterate on jobs in decreasing order of profit.
- * For each job , do the following :
- * a) Find a time slot i, such that slot is empty and i < deadline and i is greatest.
- * Put the job in this slot and mark this slot filled.
- * b) If no such i exists, then ignore the job.
+ *      For each job , do the following :
+ *      a) Find a time slot i, such that slot is empty and i < duration and i is greatest.
+ *      Put the job in this slot and mark this slot filled.
+ *      b) If no such i exists, then ignore the job.
+ *
+ * 3) Sort job sequence in increasing order of duration.
+ *
  * <p>
  * Time Complexity is O(n^2)
  * referenced from: https://www.geeksforgeeks.org/job-sequencing-problem/
@@ -23,7 +27,7 @@ public class GreedyMethod {
         boolean[] result = new boolean[numOfJobsToSequence];
 
         // To store resulting sequence of jobs
-        List<Job> job = new ArrayList<>();
+        List<Job> jobSequence = new ArrayList<>();
 
         // Iterating through all given jobs
         for (Job value : list) {
@@ -32,14 +36,14 @@ public class GreedyMethod {
                 // Free slot found
                 if (!result[j]) { // If the slot is currently empty
                     result[j] = true; // Set the slot to be filled
-                    job.add(value); // Store the job into the resulting sequence
+                    jobSequence.add(value); // Store the job into the resulting sequence
                     break; // Move on to the next job in the list
                 }
             }
         }
 //        job.sort(Comparator.comparingInt(Job::getDuration));
-        job.sort((a, b) -> a.getDuration() - b.getDuration());
-        return job;
+        jobSequence.sort((a, b) -> a.getDuration() - b.getDuration());
+        return jobSequence;
     }
 
     public static void printJob(List<Job> list) {

@@ -46,12 +46,14 @@ public class JobSequencingProblem {
 
     public static void printJobs(List<Job> list) {
         System.out.print("\nJob Sequencing: \n");
+        int total = 0;
         Iterator<Job> iterator = list.iterator();
         while (iterator.hasNext()) {
             Job theJob = iterator.next();
+            total += theJob.getProfit();
             System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
         }
-        System.out.println();
+        System.out.println(total);
     }
 
 }
