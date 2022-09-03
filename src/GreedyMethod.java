@@ -18,10 +18,9 @@ import java.util.List;
  * referenced from: https://www.geeksforgeeks.org/job-sequencing-problem/
  **/
 
-public class GreedyMethod {
+public class GreedyMethod implements SortJobs {
 
-    public static List<Job> sequenceJobs(List<Job> list) {
-        sortJob(list);
+    public List<Job> sequenceJobs(List<Job> list) {
         int listSize = list.size();
 
         // To keep track of free time slots
@@ -46,7 +45,7 @@ public class GreedyMethod {
         return jobSequence;
     }
 
-    private static void printJob(List<Job> list) {
+    public void printJobs(List<Job> list) {
         System.out.printf("%12s:", "Job");
         for (Job job : list) {
             System.out.printf("%7s ", job.getId());
@@ -62,14 +61,9 @@ public class GreedyMethod {
         System.out.println();
     }
 
-    private static void sortJob(List<Job> list) {
-        printJob(list);
-
+    public void sortJobs(List<Job> list) {
         // Sort the jobs according to decreasing order of profit
         list.sort((a, b) -> b.getProfit() - a.getProfit());
-
-        System.out.println("\nSorted List :");
-        printJob(list);
     }
 
 }

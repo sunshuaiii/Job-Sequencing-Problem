@@ -9,6 +9,9 @@ public class JobSequencingProblem {
         String fileName = askFileName();
         File file = new File(fileName);
 
+        GreedyMethod greedyMethod = new GreedyMethod();
+        NaiveRecursiveMethod naiveRecursiveMethod = new NaiveRecursiveMethod();
+
         if (readFile(file, jobList, jobStack)) {
             System.out.println("Reading data from " + fileName + "...");
             System.out.print("\nFinal job sequence following maximum profit: \n\n");
@@ -16,12 +19,20 @@ public class JobSequencingProblem {
             // 1. Greedy Method
             System.out.println("---------------------------------------------------------------------------------");
             System.out.println("Using Greedy Method:\n");
-            printJobs(GreedyMethod.sequenceJobs(jobList));
+            greedyMethod.printJobs(jobList);
+            greedyMethod.sortJobs(jobList);
+            System.out.println("\nSorted List :");
+            greedyMethod.printJobs(jobList);
+            printJobSequencing(greedyMethod.sequenceJobs(jobList));
 
             // 2. Naive Recursive Method
             System.out.println("\n\n---------------------------------------------------------------------------------");
             System.out.println("Using Naive Recursive Method:\n");
-            printJobs(NaiveRecursiveMethod.sequenceJobs(jobStack));
+            naiveRecursiveMethod.printJobs(jobStack);
+            naiveRecursiveMethod.sortJobs(jobStack);
+            System.out.println("\nSorted List :");
+            naiveRecursiveMethod.printJobs(jobStack);
+            printJobSequencing(naiveRecursiveMethod.sequenceJobs(jobStack));
         }
     }
 
@@ -63,7 +74,7 @@ public class JobSequencingProblem {
         return false;
     }
 
-    public static void printJobs(List<Job> list) {
+    public static void printJobSequencing(List<Job> list) {
         System.out.print("\nJob Sequencing: \n");
         int total = 0;
         Iterator<Job> iterator = list.iterator();
@@ -76,7 +87,7 @@ public class JobSequencingProblem {
             System.out.println("Total: " + total + " marks");
         } else if (list instanceof Stack) {
             while (!list.isEmpty()) {
-                Job theJob = ((Stack<Job>) list).pop();
+                Job theJob = ( (Stack<Job>) list ).pop();
                 total += theJob.getProfit();
                 System.out.print(theJob.getId() + " - " + theJob.getProfit() + " marks, ");
             }

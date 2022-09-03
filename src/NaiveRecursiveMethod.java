@@ -22,14 +22,13 @@ import java.util.Stack;
  *      c) return jobSequence
  *
  * <p>
- * Time Complexity is O()
+ * Time Complexity is O(2^n)
  * referenced from: https://www.geeksforgeeks.org/weighted-job-scheduling/
  **/
 
-public class NaiveRecursiveMethod {
+public class NaiveRecursiveMethod implements SortJobs {
 
-    public static Stack<Job> sequenceJobs(Stack<Job> stack) {
-        sortJob(stack);
+    public Stack<Job> sequenceJobs(Stack<Job> stack) {
         int stackSize = stack.size();
         return findMaxProfitRec(stack, new Stack<>(), stackSize);
     }
@@ -37,7 +36,7 @@ public class NaiveRecursiveMethod {
     // Find the latest job list index that does not conflict with the current job
     // Return the index of the job in the list
     // Return -1 if no such job is found
-    private static int latestNonConflict(Stack<Job> stack, int stackSize) {
+    private int latestNonConflict(Stack<Job> stack, int stackSize) {
         for (int j = stackSize - 1; j >= 0; j--) {
             if (stack.get(j).getEnd() <= stack.get(stackSize - 1).getStart())
                 return j;
@@ -46,7 +45,7 @@ public class NaiveRecursiveMethod {
     }
 
     // Recursive method that returns the maximum possible profit
-    private static Stack<Job> findMaxProfitRec(Stack<Job> stack, Stack<Job> jobSequence, int stackSize) {
+    private Stack<Job> findMaxProfitRec(Stack<Job> stack, Stack<Job> jobSequence, int stackSize) {
         // Base case
         if (stackSize == 1) {
             jobSequence.push(stack.get(0));
@@ -76,7 +75,7 @@ public class NaiveRecursiveMethod {
 
     }
 
-    private static void printJob(Stack<Job> stack) {
+    public void printJobs(List<Job> stack) {
         System.out.printf("%12s:", "Job");
         for (Job job : stack) {
             System.out.printf("%7s ", job.getId());
@@ -96,13 +95,8 @@ public class NaiveRecursiveMethod {
         System.out.println();
     }
 
-    private static void sortJob(Stack<Job> stack) {
-        printJob(stack);
-
+    public void sortJobs(List<Job> stack) {
         // Sort the jobs according to increasing order of end time
         stack.sort((b, a) -> b.getEnd() - a.getEnd());
-
-        System.out.println("\nSorted List :");
-        printJob(stack);
     }
 }
