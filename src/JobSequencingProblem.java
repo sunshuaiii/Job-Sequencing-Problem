@@ -9,13 +9,14 @@ public class JobSequencingProblem {
         String fileName = askFileName();
         File file = new File(fileName);
 
-        GreedyMethod greedyMethod = new GreedyMethod();
-        NaiveRecursiveMethod naiveRecursiveMethod = new NaiveRecursiveMethod();
-
         if (readFile(file, jobList, jobStack)) {
+            GreedyMethod greedyMethod = new GreedyMethod();
+            NaiveRecursiveMethod naiveRecursiveMethod = new NaiveRecursiveMethod();
+
             System.out.println("Reading data from " + fileName + "...");
             System.out.print("\nFinal job sequence following maximum profit: \n\n");
 
+            //  Greedy Method flowchart starts from here
             // 1. Greedy Method
             System.out.println("---------------------------------------------------------------------------------");
             System.out.println("Using Greedy Method:\n");
@@ -25,6 +26,7 @@ public class JobSequencingProblem {
             greedyMethod.printJobs(jobList);
             printJobSequencing(greedyMethod.sequenceJobs(jobList));
 
+            //  Naive Recursive Method flowchart starts from here
             // 2. Naive Recursive Method
             System.out.println("\n\n---------------------------------------------------------------------------------");
             System.out.println("Using Naive Recursive Method:\n");

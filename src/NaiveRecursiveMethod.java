@@ -22,7 +22,7 @@ import java.util.Stack;
  *      c) return jobSequence
  *
  * <p>
- * Time Complexity is O(2^n)
+ * Time Complexity is O(n)
  * referenced from: https://www.geeksforgeeks.org/weighted-job-scheduling/
  **/
 
